@@ -1,45 +1,45 @@
 import tkinter as tk
 from tkinter import *
 from tkinter import ttk
-from pembayaran import popUp
-from create_delete import creDel
 from multi_function import *
 
 # Display
-admin_root = Tk()
-admin_root.configure(background='white')
-admin_root.geometry('600x415')
-admin_root.title('admin')
-admin_root.resizable(False, False)
+user_root = Tk()
+user_root.configure(background='white')
+user_root.geometry('600x415')
+user_root.title('user')
+user_root.resizable(False, False)
 
 nameFIleCsv = 'data.csv'
 
 # Frame Pembungkus ==================================================================================================================
-display = Frame(admin_root, background='white')
+display = Frame(user_root, background='white')
 display.pack(padx=30, pady=10, expand=True, fill='both')
 
 # Frame Judul
-header = Frame(display, background='white')
-header.pack()
+FrameHeader = Frame(display, background='white')
+FrameHeader.pack()
 
 # Frame Action
-action = Frame(display, background='white')
-action.pack(fill='x')
+FrameAction = Frame(display, background='white')
+FrameAction.pack(fill='x')
 
 # Frame Data
-frameData = Frame(display, background='white')
-frameData.pack()
+FrameData = Frame(display, background='white')
+FrameData.pack()
 
 # Frame Button
-buttonAction = Frame(display, background='white')
-buttonAction.pack(fill='both')
+FrameButton = Frame(display, background='white')
+FrameButton.pack(fill='both')
 
 # Bagian Function ===================================================================================================================
 # Update Data List Box
+
+
 def update_data(data=list):
     for i in tree.get_children():
         tree.delete(i)
-    
+
     count = 0
     for item in data:
         count += 1
@@ -47,6 +47,8 @@ def update_data(data=list):
             item[0], item[1], item[2], item[3], item[4], item[5], item[6]))
 
 # Fungsi Search
+
+
 def functionSearch(e):
     # Mengambil data dengan .get()
     search = searchBox.get()
@@ -61,6 +63,7 @@ def functionSearch(e):
     update_data(data)
 
 # Function Sort
+
 def sortBy(e):
     # file Csv
     data = readCsv(nameFIleCsv)
@@ -75,19 +78,22 @@ def sortBy(e):
 
     update_data(data)
 
+
 def buttonUpdate():
     update_data(readCsv(nameFIleCsv))
 
+
 def buttonLogOut():
-    admin_root.destroy()
+    user_root.destroy()
     import login_page
 
 # Bagian Tampilan ===================================================================================================================
-judul = Label(header, text='DATA BENDAHARA',font=('inter', 15), background='white')
+judul = Label(FrameHeader, text='DATA BENDAHARA',
+              font=('inter', 15), background='white')
 judul.pack(fill='y', pady=15)
 
 # garis lurus
-canvas = Canvas(header, width=600, height=2, background='white')
+canvas = Canvas(FrameHeader, width=600, height=2, background='white')
 canvas.pack(fill='y')
 
 # Garis Bagian Judul
@@ -95,14 +101,15 @@ line = canvas.create_line(0, 3, 580, 3, fill="black", width=2)
 
 # Bagian Filter =====================================================================================================================
 # Search Box
-searchBox = ttk.Entry(action)
+searchBox = ttk.Entry(FrameAction)
 searchBox.grid(ipadx=15, padx=10, pady=10, row=0, column=0)
 
 # Autosearch
 searchBox.bind("<KeyRelease>", functionSearch)
 
 # Sorted
-sortedBy = ttk.Combobox(action, values=['Sorted by...','A-Z', 'Z-A'], state='readonly')
+sortedBy = ttk.Combobox(
+    FrameAction, values=['Sorted by...', 'A-Z', 'Z-A'], state='readonly')
 sortedBy.current(0)
 sortedBy.config(width=10)
 sortedBy.grid(padx=270, row=0, column=1)
@@ -112,14 +119,15 @@ sortedBy.bind("<<ComboboxSelected>>", sortBy)
 
 # Tree View and Frame Scroll ========================================================================================================
 # Melakukan scroll
-scrollData = Scrollbar(frameData)
+scrollData = Scrollbar(FrameData)
 scrollData.pack(side=RIGHT, fill=Y)
 
 # Buat Treeview
-tree = ttk.Treeview(frameData, yscrollcommand=scrollData.set)
+tree = ttk.Treeview(FrameData, yscrollcommand=scrollData.set)
 
 # Format panggilan & keluaran
-tree["columns"] = ("nama", "senin", "selasa", "rabu", "kamis", "jumat", "sabtu")
+tree["columns"] = ("nama", "senin", "selasa",
+                   "rabu", "kamis", "jumat", "sabtu")
 
 # Column
 tree.column("#0", width=50, minwidth=50, stretch=tk.NO)
@@ -148,21 +156,12 @@ tree.pack()
 # Menampilkan scroll
 scrollData.config(command=tree.yview)
 
-# Button pembayaran and Cancel ======================================================================================================
-buttonBayar = Button(buttonAction, text='PEMBAYARAN', font=('roboto', 9), foreground='white', background='green', activebackground='white',
-                        activeforeground='black', borderwidth=0, cursor='hand2', command=popUp)
-buttonBayar.grid(row=0, column=1, ipadx=15, ipady=3, pady=20, padx=10)
-
-buttonEdit = Button(buttonAction, text='EDIT', font=('roboto', 9), foreground='white', background='green', activebackground='white',
-                    activeforeground='black', borderwidth=0, cursor='hand2', command=creDel)
-buttonEdit.grid(row=0, column=2, ipadx=40, ipady=3, pady=20, padx=10)
-
-buttonBayar = Button(buttonAction, text='UPDATE', font=('roboto', 9), foreground='white', background='green', activebackground='white',
+buttonBayar = Button(FrameButton, text='UPDATE', font=('roboto', 9), foreground='white', background='green', activebackground='white',
                      activeforeground='black', borderwidth=0, cursor='hand2', command=buttonUpdate)
-buttonBayar.grid(row=0, column=3, ipadx=30, ipady=3, pady=20, padx=10)
+buttonBayar.grid(row=0, column=0, ipadx=30, ipady=3, pady=20, padx=10)
 
-buttonBayar = Button(buttonAction, text='LOG OUT', font=('roboto', 9), foreground='white', background='red', activebackground='white',
+buttonBayar = Button(FrameButton, text='LOG OUT', font=('roboto', 9), foreground='white', background='red', activebackground='white',
                      activeforeground='black', borderwidth=0, cursor='hand2', command=buttonLogOut)
-buttonBayar.grid(row=0, column=4, ipadx=27, ipady=3, pady=20, padx=10)
+buttonBayar.grid(row=0, column=1, ipadx=27, ipady=3, pady=20, padx=10)
 
-admin_root.mainloop()
+user_root.mainloop()

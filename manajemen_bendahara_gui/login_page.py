@@ -13,12 +13,10 @@ def funcLoginPage():
     # Text Variable
     USERNAME = StringVar()
     PASSWORD = StringVar()
-
-    nameFIleCsv = 'data_akun.csv' # Csv Data Akun
-    nameCountCsv = 'count.csv' # Csv Count
     
     global count
     count = 2
+    nameFIleCsv = 'data_akun.csv' # Csv Data Akun
     
     # Function untuk masuk ke page selanjutnya
     def actionLogin():

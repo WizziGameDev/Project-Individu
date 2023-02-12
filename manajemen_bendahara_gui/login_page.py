@@ -19,16 +19,11 @@ def funcLoginPage():
 
     # Function untuk masuk ke page selanjutnya
     def actionLogin():
+        global count
         data_akun = readCsv(nameFIleCsv)
         username = USERNAME.get()
         password = PASSWORD.get()
         found = False
-        hitungAngka = readCsv('count.csv')
-        count = ''
-        for angka in hitungAngka:
-            count = angka[0]
-
-        count = int(count)
 
         if username != '' and password != '':
             if username == 'admin' and int(password) == 123:
@@ -43,9 +38,7 @@ def funcLoginPage():
                     messagebox.showwarning('warning', f'Incorrect username and password, remaining {count} times')
                     if count > 0:
                         count -= 1
-                        createCsv([str(count)], nameCountCsv)
                     else:
-                        createCsv([str(2)], nameCountCsv)
                         messagebox.showinfo('time out', f'Your login time out, you can come back later. Thank you')
                         login_root.destroy()
         else:

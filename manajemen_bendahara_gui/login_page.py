@@ -16,7 +16,10 @@ def funcLoginPage():
 
     nameFIleCsv = 'data_akun.csv' # Csv Data Akun
     nameCountCsv = 'count.csv' # Csv Count
-
+    
+    global count
+    count = 2
+    
     # Function untuk masuk ke page selanjutnya
     def actionLogin():
         global count
